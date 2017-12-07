@@ -1,0 +1,6 @@
+{
+  "name": "cdn77/papi",
+  "description": "PApi - PHP Api client library for Prometheus",
+  "license": ["MIT"],
+  "keywords": ["prometheus", "php", "client", "api"]
+}
