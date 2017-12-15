@@ -7,13 +7,14 @@ Targets to provide simple means for obtaining data from Prometheus API.
 
 Supports Prometheus 1.x and 2.x `/api/v1` [endpoints](https://prometheus.io/docs/prometheus/latest/querying/api/).
 
-##Instalation
+## Instalation
 Use composer to add PApi as dependency:
 
         $ composer install cdn77/papi
 
-##Usage
-###Create a client
+## Usage
+
+### Create a client
 
     <?php
     use PApi\Client;
@@ -53,5 +54,5 @@ PApi currently has methods for all available endpoints provided by Prometheus.
 #### Alert Managers
     $client->getAlertManagers();
 
-##Future plans
-- add pure curl as default Connection, move guzzle to suggest
+## Future plans
+- add pure curl as default Connection, move guzzle to suggested dependencies
