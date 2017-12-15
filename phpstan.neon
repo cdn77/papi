@@ -1,0 +1,9 @@
+parameters:
+    excludes_analyse:
+        - src/Response/Meta/
+includes:
+    # Enable Level 7
+    - vendor/phpstan/phpstan/conf/config.level7.neon
+
+    # extra strictness
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

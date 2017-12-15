@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<ruleset>
+    <rule ref="vendor/cdn77/coding-standard/Cdn77CodingStandard"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+        <properties>
+            <property
+                    name="usefulAnnotations"
+                    type="array"
+                    value="
+                    @use,
+                    @see,
+                    @internal,
+                    @deprecated,
+                    @codeCoverageIgnoreStart,
+                    @codeCoverageIgnoreEnd,
+                    @PhpArrayOffset
+                "
+            />
+        </properties>
+    </rule>
+
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+    <arg name="encoding" value="utf-8"/>
+    <arg value="s"/>
+    <arg value="n"/>
+    <arg value="p"/>
+    <arg name="colors" />
+    <arg name="parallel" value="80"/>
+    <arg name="cache" value=".phpcs-cache"/>
+
+    <!-- do not sniff in these folders -->
+    <exclude-pattern>src/Response/Meta/*</exclude-pattern>
+
+    <file>src/</file>
+    <file>tests/</file>
+</ruleset>

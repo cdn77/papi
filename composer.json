@@ -2,5 +2,36 @@
   "name": "cdn77/papi",
   "description": "PApi - PHP Api client library for Prometheus",
   "license": ["MIT"],
-  "keywords": ["prometheus", "php", "client", "api"]
+  "keywords": ["prometheus", "php", "client", "api"],
+  "type": "library",
+  "require": {
+    "php": ">=7.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "skrz/meta": "^3.1"
+  },
+  "require-dev": {
+    "cdn77/coding-standard": "^0.5",
+    "phpstan/phpstan": "^0.9",
+    "phpstan/phpstan-strict-rules": "^0.9",
+    "phpunit/phpunit": "^6.3",
+    "slevomat/coding-standard": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {"PApi\\": ["src/"]}
+  },
+  "autoload-dev": {
+    "classmap": ["tests/PApi"]
+  },
+  "scripts": {
+    "phpcs": [
+      "phpcs --standard=phpcs.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp src",
+      "phpcs --standard=phpcs.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp tests"
+    ],
+    "phpstan": [
+      "phpstan analyse -c phpstan.neon src tests --level=max --no-progress"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
