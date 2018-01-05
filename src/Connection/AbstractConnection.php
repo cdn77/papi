@@ -15,10 +15,7 @@ abstract class AbstractConnection implements ConnectionInterface
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->connect();
     }
-
-    abstract protected function getBaseUri() : string;
 
     abstract protected function connect() : void;
 }

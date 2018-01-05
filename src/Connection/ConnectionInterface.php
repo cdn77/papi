@@ -6,6 +6,8 @@ namespace PApi\Connection;
 
 interface ConnectionInterface
 {
+    public function __construct(array $config);
+
     /**
      * @param mixed[] $config
      */

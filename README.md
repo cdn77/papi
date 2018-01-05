@@ -10,7 +10,7 @@ Supports Prometheus 1.x and 2.x `/api/v1` [endpoints](https://prometheus.io/docs
 ## Instalation
 Use composer to add PApi as dependency:
 
-        $ composer install cdn77/papi
+    $ composer install cdn77/papi
 
 ## Usage
 
@@ -25,19 +25,23 @@ Use composer to add PApi as dependency:
         'host' => 'my-prometheus.com',
     ]);
     
-#### available options
+#### Available options
 
-| Name              | Default value             |
-| ----------------- | -----------------------   |
-| scheme            | http                      |
-| host              | localhost                 |
-| port              | 9090                      |
-| path              | /api/v1/                  |
-| timeout           | 30                        |
-| username          | `null`                    |
-| password          | `null`                    |
-| connectionHeaders | `[]`                      |
-| connectionType    | GuzzleConnection::class   |
+| Name              | Default value         | Description                            |
+| ----------------- | --------------------- | -------------------------------------- |  
+| scheme            | http                  | Host scheme                            |
+| host              | localhost             | Host address                           |
+| port              | 9090                  | Host port                              |
+| path              | /api/v1/              | Path to base API endpoint              |
+| timeout           | 30                    | Timeout for requests                   |
+| username          | `null`                | HTTP Auth username                     |
+| password          | `null`                | HTTP Auth password                     |
+| connectionHeaders | `[]`                  | Connection headers                     |
+| connectionType    | CurlConnection::class | Class to use for connection. See below |
+
+#### Available connection classes
+- `CurlConnection` - pure php curl implementation. Used by default.
+- `GuzzleConnection` - using [guzzle](https://github.com/guzzle/guzzle) 6.3+ library.
     
 ### Available calls
 PApi currently has methods for all available endpoints provided by Prometheus.
