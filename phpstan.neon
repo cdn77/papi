@@ -1,6 +1,7 @@
 parameters:
     excludes_analyse:
         - src/Response/Meta/
+        - src/Connection/GuzzleConnection.php
 includes:
     # Enable Level 7
     - vendor/phpstan/phpstan/conf/config.level7.neon

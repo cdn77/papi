@@ -6,7 +6,6 @@ namespace PApi;
 
 use PApi\Connection\ConnectionInterface;
 use PApi\Connection\CurlConnection;
-use PApi\Connection\GuzzleConnection;
 use PApi\Response\ArrayValuesResponse;
 use PApi\Response\DataResponse;
 use PApi\Response\Meta\ArrayValuesResponseMeta;
