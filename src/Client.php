@@ -5,6 +5,7 @@ declare (strict_types=1);
 namespace PApi;
 
 use PApi\Connection\ConnectionInterface;
+use PApi\Connection\CurlConnection;
 use PApi\Connection\GuzzleConnection;
 use PApi\Response\ArrayValuesResponse;
 use PApi\Response\DataResponse;
@@ -28,7 +29,7 @@ class Client
         'username' => null,
         'password' => null,
         'connectionHeaders' => [],
-        'connectionType' => GuzzleConnection::class,
+        'connectionType' => CurlConnection::class,
     ];
 
     /**
