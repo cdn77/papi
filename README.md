@@ -1,11 +1,9 @@
 # PApi - PHP Api client library for [Prometheus](https://github.com/prometheus/prometheus)
 [![Build Status](https://img.shields.io/travis/cdn77/papi.svg?style=flat-square)](https://travis-ci.org/cdn77/papi)
 
-**Currently in development**
-
 Targets to provide simple means for obtaining data from Prometheus API.
 
-Supports Prometheus 1.x and 2.x `/api/v1` [endpoints](https://prometheus.io/docs/prometheus/latest/querying/api/).
+Stable for [Prometheus 1.x and <= v2.0 api spec](https://prometheus.io/docs/prometheus/2.0/querying/api/)
 
 ## Instalation
 Use composer to add PApi as dependency:
@@ -57,6 +55,3 @@ PApi currently has methods for all available endpoints provided by Prometheus.
     $client->getTargets();
 #### Alert Managers
     $client->getAlertManagers();
-
-## Future plans
-- add pure curl as default Connection, move guzzle to suggested dependencies
