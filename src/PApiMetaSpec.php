@@ -19,7 +19,7 @@ class PApiMetaSpec extends MetaSpec
         $jsonModule = new JsonModule();
 
         $phpModule->addPropertySerializer(new DateTimeFormattingSerializer(
-            'Y-m-d\TH:i:s.uP',
+            'Y-m-d\TH:i:s.u???P',
             \DateTimeImmutable::class,
             '0001-01-01T00:00:00Z'
         ));

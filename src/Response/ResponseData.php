@@ -23,6 +23,9 @@ class ResponseData
     /** @var AlertManager[] */
     protected $activeAlertmanagers;
 
+    /** @var string */
+    protected $name;
+
     public function getResultType() : string
     {
         return $this->resultType;
@@ -48,5 +51,10 @@ class ResponseData
     public function getActiveAlertmanagers() : array
     {
         return $this->activeAlertmanagers;
+    }
+
+    public function getName() : string
+    {
+        return $this->name;
     }
 }

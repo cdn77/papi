@@ -48,18 +48,18 @@ class Client
 
     public function getAlertManagers() : DataResponse
     {
-        return DataResponseMeta::fromJson($this->connection->execute('alertmanagers'));
+        return DataResponseMeta::fromJson($this->connection->executeGet('alertmanagers'));
     }
 
     public function getTargets() : DataResponse
     {
-        return DataResponseMeta::fromJson($this->connection->execute('targets'));
+        return DataResponseMeta::fromJson($this->connection->executeGet('targets'));
     }
 
     public function getLabelValues(string $label) : ArrayValuesResponse
     {
         return ArrayValuesResponseMeta::fromJson(
-            $this->connection->execute('label/' . urlencode($label) . '/values')
+            $this->connection->executeGet('label/' . urlencode($label) . '/values')
         );
     }
 
@@ -69,7 +69,7 @@ class Client
     public function getSeries(array $match, \DateTimeInterface $start, \DateTimeInterface $end) : ArrayValuesResponse
     {
         return ArrayValuesResponseMeta::fromJson(
-            $this->connection->execute('series', [
+            $this->connection->executeGet('series', [
                 'match' => array_values($match),
                 'start' => $start->format(self::DATETIME_FORMAT),
                 'end' => $end->format(self::DATETIME_FORMAT),
@@ -89,7 +89,7 @@ class Client
         }
 
         return DataResponseMeta::fromJson(
-            $this->connection->execute('query_range', [
+            $this->connection->executeGet('query_range', [
                 'query' => $query,
                 'start' => $start->format(self::DATETIME_FORMAT),
                 'end' => $end->format(self::DATETIME_FORMAT),
@@ -109,11 +109,42 @@ class Client
         }
 
         return DataResponseMeta::fromJson(
-            $this->connection->execute('query', [
+            $this->connection->executeGet('query', [
                 'query' => $query,
                 'time' => $time->format(self::DATETIME_FORMAT),
                 'timeout' => $timeout,
             ])
         );
+    }
+
+    /**
+     * Make sure to enable admin APIs via `--web.enable-admin-api`
+     */
+    public function createSnapshot() : DataResponse
+    {
+        return DataResponseMeta::fromJson($this->connection->executePost('admin/tsdb/snapshot'));
+    }
+
+    /**
+     * Make sure to enable admin APIs via `--web.enable-admin-api`
+     * @param string[] $match
+     */
+    public function deleteSeries(array $match, \DateTimeInterface $start, \DateTimeInterface $end) : bool
+    {
+        $this->connection->executePost('admin/tsdb/delete_series', [
+            'match' => array_values($match),
+            'start' => $start->format(self::DATETIME_FORMAT),
+            'end' => $end->format(self::DATETIME_FORMAT),
+        ]);
+        return true;
+    }
+
+    /**
+     * Make sure to enable admin APIs via `--web.enable-admin-api`
+     */
+    public function cleanTombstones() : bool
+    {
+        $this->connection->executePost('admin/tsdb/clean_tombstones');
+        return true;
     }
 }

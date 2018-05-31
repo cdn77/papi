@@ -25,6 +25,7 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 	const RESULT = 'result';
 	const ACTIVE_TARGETS = 'activeTargets';
 	const ACTIVE_ALERTMANAGERS = 'activeAlertmanagers';
+	const NAME = 'name';
 
 	/** @var ResponseDataMeta */
 	private static $instance;
@@ -113,6 +114,7 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 		$object->result = NULL;
 		$object->activeTargets = NULL;
 		$object->activeAlertmanagers = NULL;
+		$object->name = NULL;
 	}
 
 
@@ -157,6 +159,11 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			foreach ($object->activeAlertmanagers instanceof \Traversable ? $object->activeAlertmanagers : (array)$object->activeAlertmanagers as $v0) {
 				AlertManagerMeta::hash($v0, $ctx);
 			}
+		}
+
+		if (isset($object->name)) {
+			hash_update($ctx, 'name');
+			hash_update($ctx, (string)$object->name);
 		}
 
 		if (is_string($algoOrCtx)) {
@@ -266,6 +273,17 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeAlertmanagers = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['name'])) {
+			$object->name = $input['name'];
+		} elseif (($id & 1) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
+			$object->name = null;
+		}
+		if (($id & 2) > 0 && isset($input['name'])) {
+			$object->name = $input['name'];
+		} elseif (($id & 2) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
+			$object->name = null;
+		}
+
 		return $object;
 	}
 
@@ -365,6 +383,13 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				foreach ($object->activeAlertmanagers instanceof \Traversable ? $object->activeAlertmanagers : (array)$object->activeAlertmanagers as $k0 => $v0) {
 					$output['activeAlertmanagers'][$k0] = AlertManagerMeta::toArray($v0, $group, $filter === null ? null : $filter['activeAlertmanagers']);
 				}
+			}
+
+			if (($id & 1) > 0 && ($filter === null || isset($filter['name']))) {
+				$output['name'] = $object->name;
+			}
+			if (($id & 2) > 0 && ((isset($object->name) && $filter === null) || isset($filter['name']))) {
+				$output['name'] = $object->name;
 			}
 
 		} catch (\Exception $e) {
@@ -478,6 +503,17 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeAlertmanagers = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['name'])) {
+			$object->name = $input['name'];
+		} elseif (($id & 1) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
+			$object->name = null;
+		}
+		if (($id & 2) > 0 && isset($input['name'])) {
+			$object->name = $input['name'];
+		} elseif (($id & 2) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
+			$object->name = null;
+		}
+
 		return $object;
 	}
 
@@ -577,6 +613,13 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				foreach ($object->activeAlertmanagers instanceof \Traversable ? $object->activeAlertmanagers : (array)$object->activeAlertmanagers as $k0 => $v0) {
 					$output['activeAlertmanagers'][$k0] = AlertManagerMeta::toObject($v0, $group, $filter === null ? null : $filter['activeAlertmanagers']);
 				}
+			}
+
+			if (($id & 1) > 0 && ($filter === null || isset($filter['name']))) {
+				$output['name'] = $object->name;
+			}
+			if (($id & 2) > 0 && ((isset($object->name) && $filter === null) || isset($filter['name']))) {
+				$output['name'] = $object->name;
 			}
 
 		} catch (\Exception $e) {

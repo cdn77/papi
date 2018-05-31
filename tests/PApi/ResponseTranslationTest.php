@@ -96,4 +96,13 @@ class ResponseTranslationTest extends TestCase
         $this->assertInstanceOf(Metric::class, $metric);
         $this->assertInstanceOf(\DateTimeImmutable::class, $metric->getTimeAsObject());
     }
+
+    public function testSnapshotResponse() : void
+    {
+        $response = DataResponseMeta::fromJson(file_get_contents(__DIR__ . '/../Fixtures/snapshotResponse.json'));
+
+        $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
+        $this->assertInstanceOf(ResponseData::class, $response->getData());
+        $this->assertEquals('20171210T211224Z-2be650b6d019eb54', $response->getData()->getName());
+    }
 }

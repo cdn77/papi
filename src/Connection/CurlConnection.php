@@ -34,27 +34,38 @@ class CurlConnection extends AbstractConnection
     /**
      * @param mixed[] $query
      */
-    public function execute(string $endPoint, array $query = []) : string
+    public function executeGet(string $endPoint, array $query = []) : string
     {
         if ($this->connection === null) {
             $this->connect();
         }
-        curl_reset($this->connection);
+        $url = $this->prepareConnection($endPoint, $query);
 
-        $queryParameters = http_build_query($query);
-        $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '%5B%5D=', $queryParameters);
-        $uriParts = $this->getBaseUriParts();
-        $uriParts['path'] .= $endPoint;
-        $uriParts['query'] = $queryString;
-        $url = $this->buildUrl($uriParts);
+        $response = curl_exec($this->connection);
+        if ($response === false) {
+            throw new ConnectionException(
+                sprintf(
+                    'Request GET %s returned with code %d and message `%s`',
+                    $url,
+                    curl_getinfo($this->connection, CURLINFO_RESPONSE_CODE),
+                    curl_error($this->connection)
+                )
+            );
+        }
 
-        curl_setopt($this->connection, CURLOPT_URL, $url);
-        curl_setopt($this->connection, CURLOPT_TIMEOUT, $this->config['timeout']);
-        curl_setopt($this->connection, CURLOPT_RETURNTRANSFER, true);
-        $curlHeaders = array_map(function ($key, $value) {
-            return $key . ':' . $value;
-        }, $this->config['connectionHeaders']);
-        curl_setopt($this->connection, CURLOPT_HTTPHEADER, $curlHeaders);
+        return $response;
+    }
+
+    /**
+     * @param mixed[] $query
+     */
+    public function executePost(string $endPoint, array $query = []) : string
+    {
+        if ($this->connection === null) {
+            $this->connect();
+        }
+        $url = $this->prepareConnection($endPoint, $query);
+        curl_setopt($this->connection, CURLOPT_POST, 1);
 
         $response = curl_exec($this->connection);
         if ($response === false) {
@@ -116,5 +127,31 @@ class CurlConnection extends AbstractConnection
             'user' => $this->config['username'],
             'pass' => $this->config['password'],
         ];
+    }
+
+    /**
+     * @param mixed[] $query
+     */
+    protected function prepareConnection(string $endPoint, array $query = []) : string
+    {
+        curl_reset($this->connection);
+
+        $uriParts = $this->getBaseUriParts();
+        $uriParts['path'] .= $endPoint;
+        if (!empty($query)) {
+            $queryParameters = http_build_query($query);
+            $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '%5B%5D=', $queryParameters);
+            $uriParts['query'] = $queryString;
+        }
+        $url = $this->buildUrl($uriParts);
+
+        curl_setopt($this->connection, CURLOPT_URL, $url);
+        curl_setopt($this->connection, CURLOPT_TIMEOUT, $this->config['timeout']);
+        curl_setopt($this->connection, CURLOPT_RETURNTRANSFER, true);
+        $curlHeaders = array_map(function ($key, $value) {
+            return $key . ':' . $value;
+        }, $this->config['connectionHeaders']);
+        curl_setopt($this->connection, CURLOPT_HTTPHEADER, $curlHeaders);
+        return $url;
     }
 }
