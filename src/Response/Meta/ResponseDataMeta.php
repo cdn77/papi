@@ -24,8 +24,11 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 	const RESULT_TYPE = 'resultType';
 	const RESULT = 'result';
 	const ACTIVE_TARGETS = 'activeTargets';
+	const DROPPED_TARGETS = 'droppedTargets';
 	const ACTIVE_ALERTMANAGERS = 'activeAlertmanagers';
+	const DROPPED_ALERTMANAGERS = 'droppedAlertmanagers';
 	const NAME = 'name';
+	const YAML = 'yaml';
 
 	/** @var ResponseDataMeta */
 	private static $instance;
@@ -113,8 +116,11 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 		$object->resultType = NULL;
 		$object->result = NULL;
 		$object->activeTargets = NULL;
+		$object->droppedTargets = NULL;
 		$object->activeAlertmanagers = NULL;
+		$object->droppedAlertmanagers = NULL;
 		$object->name = NULL;
+		$object->yaml = NULL;
 	}
 
 
@@ -154,6 +160,13 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			}
 		}
 
+		if (isset($object->droppedTargets)) {
+			hash_update($ctx, 'droppedTargets');
+			foreach ($object->droppedTargets instanceof \Traversable ? $object->droppedTargets : (array)$object->droppedTargets as $v0) {
+				TargetMeta::hash($v0, $ctx);
+			}
+		}
+
 		if (isset($object->activeAlertmanagers)) {
 			hash_update($ctx, 'activeAlertmanagers');
 			foreach ($object->activeAlertmanagers instanceof \Traversable ? $object->activeAlertmanagers : (array)$object->activeAlertmanagers as $v0) {
@@ -161,9 +174,21 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			}
 		}
 
+		if (isset($object->droppedAlertmanagers)) {
+			hash_update($ctx, 'droppedAlertmanagers');
+			foreach ($object->droppedAlertmanagers instanceof \Traversable ? $object->droppedAlertmanagers : (array)$object->droppedAlertmanagers as $v0) {
+				AlertManagerMeta::hash($v0, $ctx);
+			}
+		}
+
 		if (isset($object->name)) {
 			hash_update($ctx, 'name');
 			hash_update($ctx, (string)$object->name);
+		}
+
+		if (isset($object->yaml)) {
+			hash_update($ctx, 'yaml');
+			hash_update($ctx, (string)$object->yaml);
 		}
 
 		if (is_string($algoOrCtx)) {
@@ -252,6 +277,27 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeTargets = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['droppedTargets'])) {
+			if (!(isset($object->droppedTargets) && is_array($object->droppedTargets))) {
+				$object->droppedTargets = array();
+			}
+			foreach ($input['droppedTargets'] instanceof \Traversable ? $input['droppedTargets'] : (array)$input['droppedTargets'] as $k0 => $v0) {
+				$object->droppedTargets[$k0] = TargetMeta::fromArray($v0, $group, isset($object->droppedTargets[$k0]) ? $object->droppedTargets[$k0] : null);
+			}
+		} elseif (($id & 1) > 0 && array_key_exists('droppedTargets', $input) && $input['droppedTargets'] === null) {
+			$object->droppedTargets = null;
+		}
+		if (($id & 2) > 0 && isset($input['droppedTargets'])) {
+			if (!(isset($object->droppedTargets) && is_array($object->droppedTargets))) {
+				$object->droppedTargets = array();
+			}
+			foreach ($input['droppedTargets'] instanceof \Traversable ? $input['droppedTargets'] : (array)$input['droppedTargets'] as $k0 => $v0) {
+				$object->droppedTargets[$k0] = TargetMeta::fromArray($v0, $group, isset($object->droppedTargets[$k0]) ? $object->droppedTargets[$k0] : null);
+			}
+		} elseif (($id & 2) > 0 && array_key_exists('droppedTargets', $input) && $input['droppedTargets'] === null) {
+			$object->droppedTargets = null;
+		}
+
 		if (($id & 1) > 0 && isset($input['activeAlertmanagers'])) {
 			if (!(isset($object->activeAlertmanagers) && is_array($object->activeAlertmanagers))) {
 				$object->activeAlertmanagers = array();
@@ -273,6 +319,27 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeAlertmanagers = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['droppedAlertmanagers'])) {
+			if (!(isset($object->droppedAlertmanagers) && is_array($object->droppedAlertmanagers))) {
+				$object->droppedAlertmanagers = array();
+			}
+			foreach ($input['droppedAlertmanagers'] instanceof \Traversable ? $input['droppedAlertmanagers'] : (array)$input['droppedAlertmanagers'] as $k0 => $v0) {
+				$object->droppedAlertmanagers[$k0] = AlertManagerMeta::fromArray($v0, $group, isset($object->droppedAlertmanagers[$k0]) ? $object->droppedAlertmanagers[$k0] : null);
+			}
+		} elseif (($id & 1) > 0 && array_key_exists('droppedAlertmanagers', $input) && $input['droppedAlertmanagers'] === null) {
+			$object->droppedAlertmanagers = null;
+		}
+		if (($id & 2) > 0 && isset($input['droppedAlertmanagers'])) {
+			if (!(isset($object->droppedAlertmanagers) && is_array($object->droppedAlertmanagers))) {
+				$object->droppedAlertmanagers = array();
+			}
+			foreach ($input['droppedAlertmanagers'] instanceof \Traversable ? $input['droppedAlertmanagers'] : (array)$input['droppedAlertmanagers'] as $k0 => $v0) {
+				$object->droppedAlertmanagers[$k0] = AlertManagerMeta::fromArray($v0, $group, isset($object->droppedAlertmanagers[$k0]) ? $object->droppedAlertmanagers[$k0] : null);
+			}
+		} elseif (($id & 2) > 0 && array_key_exists('droppedAlertmanagers', $input) && $input['droppedAlertmanagers'] === null) {
+			$object->droppedAlertmanagers = null;
+		}
+
 		if (($id & 1) > 0 && isset($input['name'])) {
 			$object->name = $input['name'];
 		} elseif (($id & 1) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
@@ -282,6 +349,17 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->name = $input['name'];
 		} elseif (($id & 2) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
 			$object->name = null;
+		}
+
+		if (($id & 1) > 0 && isset($input['yaml'])) {
+			$object->yaml = $input['yaml'];
+		} elseif (($id & 1) > 0 && array_key_exists('yaml', $input) && $input['yaml'] === null) {
+			$object->yaml = null;
+		}
+		if (($id & 2) > 0 && isset($input['yaml'])) {
+			$object->yaml = $input['yaml'];
+		} elseif (($id & 2) > 0 && array_key_exists('yaml', $input) && $input['yaml'] === null) {
+			$object->yaml = null;
 		}
 
 		return $object;
@@ -368,6 +446,23 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				}
 			}
 
+			if (($id & 1) > 0 && ($filter === null || isset($filter['droppedTargets']))) {
+				if (!(isset($output['droppedTargets']) && is_array($output['droppedTargets']))) {
+					$output['droppedTargets'] = array();
+				}
+				foreach ($object->droppedTargets instanceof \Traversable ? $object->droppedTargets : (array)$object->droppedTargets as $k0 => $v0) {
+					$output['droppedTargets'][$k0] = TargetMeta::toArray($v0, $group, $filter === null ? null : $filter['droppedTargets']);
+				}
+			}
+			if (($id & 2) > 0 && ((isset($object->droppedTargets) && $filter === null) || isset($filter['droppedTargets']))) {
+				if (!(isset($output['droppedTargets']) && is_array($output['droppedTargets']))) {
+					$output['droppedTargets'] = array();
+				}
+				foreach ($object->droppedTargets instanceof \Traversable ? $object->droppedTargets : (array)$object->droppedTargets as $k0 => $v0) {
+					$output['droppedTargets'][$k0] = TargetMeta::toArray($v0, $group, $filter === null ? null : $filter['droppedTargets']);
+				}
+			}
+
 			if (($id & 1) > 0 && ($filter === null || isset($filter['activeAlertmanagers']))) {
 				if (!(isset($output['activeAlertmanagers']) && is_array($output['activeAlertmanagers']))) {
 					$output['activeAlertmanagers'] = array();
@@ -385,11 +480,35 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				}
 			}
 
+			if (($id & 1) > 0 && ($filter === null || isset($filter['droppedAlertmanagers']))) {
+				if (!(isset($output['droppedAlertmanagers']) && is_array($output['droppedAlertmanagers']))) {
+					$output['droppedAlertmanagers'] = array();
+				}
+				foreach ($object->droppedAlertmanagers instanceof \Traversable ? $object->droppedAlertmanagers : (array)$object->droppedAlertmanagers as $k0 => $v0) {
+					$output['droppedAlertmanagers'][$k0] = AlertManagerMeta::toArray($v0, $group, $filter === null ? null : $filter['droppedAlertmanagers']);
+				}
+			}
+			if (($id & 2) > 0 && ((isset($object->droppedAlertmanagers) && $filter === null) || isset($filter['droppedAlertmanagers']))) {
+				if (!(isset($output['droppedAlertmanagers']) && is_array($output['droppedAlertmanagers']))) {
+					$output['droppedAlertmanagers'] = array();
+				}
+				foreach ($object->droppedAlertmanagers instanceof \Traversable ? $object->droppedAlertmanagers : (array)$object->droppedAlertmanagers as $k0 => $v0) {
+					$output['droppedAlertmanagers'][$k0] = AlertManagerMeta::toArray($v0, $group, $filter === null ? null : $filter['droppedAlertmanagers']);
+				}
+			}
+
 			if (($id & 1) > 0 && ($filter === null || isset($filter['name']))) {
 				$output['name'] = $object->name;
 			}
 			if (($id & 2) > 0 && ((isset($object->name) && $filter === null) || isset($filter['name']))) {
 				$output['name'] = $object->name;
+			}
+
+			if (($id & 1) > 0 && ($filter === null || isset($filter['yaml']))) {
+				$output['yaml'] = $object->yaml;
+			}
+			if (($id & 2) > 0 && ((isset($object->yaml) && $filter === null) || isset($filter['yaml']))) {
+				$output['yaml'] = $object->yaml;
 			}
 
 		} catch (\Exception $e) {
@@ -482,6 +601,27 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeTargets = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['droppedTargets'])) {
+			if (!(isset($object->droppedTargets) && is_array($object->droppedTargets))) {
+				$object->droppedTargets = array();
+			}
+			foreach ($input['droppedTargets'] instanceof \Traversable ? $input['droppedTargets'] : (array)$input['droppedTargets'] as $k0 => $v0) {
+				$object->droppedTargets[$k0] = TargetMeta::fromObject($v0, $group, isset($object->droppedTargets[$k0]) ? $object->droppedTargets[$k0] : null);
+			}
+		} elseif (($id & 1) > 0 && array_key_exists('droppedTargets', $input) && $input['droppedTargets'] === null) {
+			$object->droppedTargets = null;
+		}
+		if (($id & 2) > 0 && isset($input['droppedTargets'])) {
+			if (!(isset($object->droppedTargets) && is_array($object->droppedTargets))) {
+				$object->droppedTargets = array();
+			}
+			foreach ($input['droppedTargets'] instanceof \Traversable ? $input['droppedTargets'] : (array)$input['droppedTargets'] as $k0 => $v0) {
+				$object->droppedTargets[$k0] = TargetMeta::fromObject($v0, $group, isset($object->droppedTargets[$k0]) ? $object->droppedTargets[$k0] : null);
+			}
+		} elseif (($id & 2) > 0 && array_key_exists('droppedTargets', $input) && $input['droppedTargets'] === null) {
+			$object->droppedTargets = null;
+		}
+
 		if (($id & 1) > 0 && isset($input['activeAlertmanagers'])) {
 			if (!(isset($object->activeAlertmanagers) && is_array($object->activeAlertmanagers))) {
 				$object->activeAlertmanagers = array();
@@ -503,6 +643,27 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->activeAlertmanagers = null;
 		}
 
+		if (($id & 1) > 0 && isset($input['droppedAlertmanagers'])) {
+			if (!(isset($object->droppedAlertmanagers) && is_array($object->droppedAlertmanagers))) {
+				$object->droppedAlertmanagers = array();
+			}
+			foreach ($input['droppedAlertmanagers'] instanceof \Traversable ? $input['droppedAlertmanagers'] : (array)$input['droppedAlertmanagers'] as $k0 => $v0) {
+				$object->droppedAlertmanagers[$k0] = AlertManagerMeta::fromObject($v0, $group, isset($object->droppedAlertmanagers[$k0]) ? $object->droppedAlertmanagers[$k0] : null);
+			}
+		} elseif (($id & 1) > 0 && array_key_exists('droppedAlertmanagers', $input) && $input['droppedAlertmanagers'] === null) {
+			$object->droppedAlertmanagers = null;
+		}
+		if (($id & 2) > 0 && isset($input['droppedAlertmanagers'])) {
+			if (!(isset($object->droppedAlertmanagers) && is_array($object->droppedAlertmanagers))) {
+				$object->droppedAlertmanagers = array();
+			}
+			foreach ($input['droppedAlertmanagers'] instanceof \Traversable ? $input['droppedAlertmanagers'] : (array)$input['droppedAlertmanagers'] as $k0 => $v0) {
+				$object->droppedAlertmanagers[$k0] = AlertManagerMeta::fromObject($v0, $group, isset($object->droppedAlertmanagers[$k0]) ? $object->droppedAlertmanagers[$k0] : null);
+			}
+		} elseif (($id & 2) > 0 && array_key_exists('droppedAlertmanagers', $input) && $input['droppedAlertmanagers'] === null) {
+			$object->droppedAlertmanagers = null;
+		}
+
 		if (($id & 1) > 0 && isset($input['name'])) {
 			$object->name = $input['name'];
 		} elseif (($id & 1) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
@@ -512,6 +673,17 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$object->name = $input['name'];
 		} elseif (($id & 2) > 0 && array_key_exists('name', $input) && $input['name'] === null) {
 			$object->name = null;
+		}
+
+		if (($id & 1) > 0 && isset($input['yaml'])) {
+			$object->yaml = $input['yaml'];
+		} elseif (($id & 1) > 0 && array_key_exists('yaml', $input) && $input['yaml'] === null) {
+			$object->yaml = null;
+		}
+		if (($id & 2) > 0 && isset($input['yaml'])) {
+			$object->yaml = $input['yaml'];
+		} elseif (($id & 2) > 0 && array_key_exists('yaml', $input) && $input['yaml'] === null) {
+			$object->yaml = null;
 		}
 
 		return $object;
@@ -598,6 +770,23 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				}
 			}
 
+			if (($id & 1) > 0 && ($filter === null || isset($filter['droppedTargets']))) {
+				if (!(isset($output['droppedTargets']) && is_array($output['droppedTargets']))) {
+					$output['droppedTargets'] = array();
+				}
+				foreach ($object->droppedTargets instanceof \Traversable ? $object->droppedTargets : (array)$object->droppedTargets as $k0 => $v0) {
+					$output['droppedTargets'][$k0] = TargetMeta::toObject($v0, $group, $filter === null ? null : $filter['droppedTargets']);
+				}
+			}
+			if (($id & 2) > 0 && ((isset($object->droppedTargets) && $filter === null) || isset($filter['droppedTargets']))) {
+				if (!(isset($output['droppedTargets']) && is_array($output['droppedTargets']))) {
+					$output['droppedTargets'] = array();
+				}
+				foreach ($object->droppedTargets instanceof \Traversable ? $object->droppedTargets : (array)$object->droppedTargets as $k0 => $v0) {
+					$output['droppedTargets'][$k0] = TargetMeta::toObject($v0, $group, $filter === null ? null : $filter['droppedTargets']);
+				}
+			}
+
 			if (($id & 1) > 0 && ($filter === null || isset($filter['activeAlertmanagers']))) {
 				if (!(isset($output['activeAlertmanagers']) && is_array($output['activeAlertmanagers']))) {
 					$output['activeAlertmanagers'] = array();
@@ -615,11 +804,35 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 				}
 			}
 
+			if (($id & 1) > 0 && ($filter === null || isset($filter['droppedAlertmanagers']))) {
+				if (!(isset($output['droppedAlertmanagers']) && is_array($output['droppedAlertmanagers']))) {
+					$output['droppedAlertmanagers'] = array();
+				}
+				foreach ($object->droppedAlertmanagers instanceof \Traversable ? $object->droppedAlertmanagers : (array)$object->droppedAlertmanagers as $k0 => $v0) {
+					$output['droppedAlertmanagers'][$k0] = AlertManagerMeta::toObject($v0, $group, $filter === null ? null : $filter['droppedAlertmanagers']);
+				}
+			}
+			if (($id & 2) > 0 && ((isset($object->droppedAlertmanagers) && $filter === null) || isset($filter['droppedAlertmanagers']))) {
+				if (!(isset($output['droppedAlertmanagers']) && is_array($output['droppedAlertmanagers']))) {
+					$output['droppedAlertmanagers'] = array();
+				}
+				foreach ($object->droppedAlertmanagers instanceof \Traversable ? $object->droppedAlertmanagers : (array)$object->droppedAlertmanagers as $k0 => $v0) {
+					$output['droppedAlertmanagers'][$k0] = AlertManagerMeta::toObject($v0, $group, $filter === null ? null : $filter['droppedAlertmanagers']);
+				}
+			}
+
 			if (($id & 1) > 0 && ($filter === null || isset($filter['name']))) {
 				$output['name'] = $object->name;
 			}
 			if (($id & 2) > 0 && ((isset($object->name) && $filter === null) || isset($filter['name']))) {
 				$output['name'] = $object->name;
+			}
+
+			if (($id & 1) > 0 && ($filter === null || isset($filter['yaml']))) {
+				$output['yaml'] = $object->yaml;
+			}
+			if (($id & 2) > 0 && ((isset($object->yaml) && $filter === null) || isset($filter['yaml']))) {
+				$output['yaml'] = $object->yaml;
 			}
 
 		} catch (\Exception $e) {
@@ -754,12 +967,28 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$input['activeTargets'] = $decoded;
 		}
 
+		if (($id & 2) > 0 && isset($input['droppedTargets']) && is_string($input['droppedTargets'])) {
+			$decoded = json_decode($input['droppedTargets'], true);
+			if ($decoded === null && $input['droppedTargets'] !== '' && strcasecmp($input['droppedTargets'], 'null')) {
+				throw new \InvalidArgumentException('Could not decode given JSON: ' . $input['droppedTargets'] . '.');
+			}
+			$input['droppedTargets'] = $decoded;
+		}
+
 		if (($id & 2) > 0 && isset($input['activeAlertmanagers']) && is_string($input['activeAlertmanagers'])) {
 			$decoded = json_decode($input['activeAlertmanagers'], true);
 			if ($decoded === null && $input['activeAlertmanagers'] !== '' && strcasecmp($input['activeAlertmanagers'], 'null')) {
 				throw new \InvalidArgumentException('Could not decode given JSON: ' . $input['activeAlertmanagers'] . '.');
 			}
 			$input['activeAlertmanagers'] = $decoded;
+		}
+
+		if (($id & 2) > 0 && isset($input['droppedAlertmanagers']) && is_string($input['droppedAlertmanagers'])) {
+			$decoded = json_decode($input['droppedAlertmanagers'], true);
+			if ($decoded === null && $input['droppedAlertmanagers'] !== '' && strcasecmp($input['droppedAlertmanagers'], 'null')) {
+				throw new \InvalidArgumentException('Could not decode given JSON: ' . $input['droppedAlertmanagers'] . '.');
+			}
+			$input['droppedAlertmanagers'] = $decoded;
 		}
 
 		/** @var object $input */
@@ -805,8 +1034,16 @@ class ResponseDataMeta extends ResponseData implements MetaInterface, PhpMetaInt
 			$output['activeTargets'] = json_encode($output['activeTargets'], $options);
 		}
 
+		if (($id & 2) > 0 && isset($output['droppedTargets']) && ($filter === null || isset($filter['droppedTargets']))) {
+			$output['droppedTargets'] = json_encode($output['droppedTargets'], $options);
+		}
+
 		if (($id & 2) > 0 && isset($output['activeAlertmanagers']) && ($filter === null || isset($filter['activeAlertmanagers']))) {
 			$output['activeAlertmanagers'] = json_encode($output['activeAlertmanagers'], $options);
+		}
+
+		if (($id & 2) > 0 && isset($output['droppedAlertmanagers']) && ($filter === null || isset($filter['droppedAlertmanagers']))) {
+			$output['droppedAlertmanagers'] = json_encode($output['droppedAlertmanagers'], $options);
 		}
 
 		return $output;
