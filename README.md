@@ -3,7 +3,8 @@
 
 Targets to provide simple means for obtaining data from Prometheus API.
 
-Stable for [Prometheus 1.x and <= v2.0 api spec](https://prometheus.io/docs/prometheus/2.0/querying/api/)
+Stable for [Prometheus 1.x and <= v2.1 api spec](https://prometheus.io/docs/prometheus/2.1/querying/api/)
+NOTICE: some endpoints are only available in newer versions of Prometheus. For detailed list see [table of available calls](#available-calls) below.
 
 ## Instalation
 Use composer to add PApi as dependency:
@@ -43,15 +44,15 @@ Use composer to add PApi as dependency:
     
 ### Available calls
 PApi currently has methods for all available endpoints provided by Prometheus.
-#### Query
-    $client->getQuery('up', new \DateTimeImmutable('now');
-#### QueryRange
-    $client->getQueryRange('up', new \DateTimeImmutable('today'), new \DateTimeImmutable('now'), '12h');
-#### Series
-    $client->getSeries(['up'], new \DateTimeImmutable('-1 minute'), new \DateTimeImmutable('now'));
-#### Label Values
-    $client->getLabelValues('job');
-#### Targets (active only)
-    $client->getTargets();
-#### Alert Managers
-    $client->getAlertManagers();
+
+| Call                  | Code                                                                                                   | Prometheus compatibility | Official doc                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------ |
+| Query                 | `$client->getQuery('up', new \DateTimeImmutable('now');`                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#instant-queries)                  |
+| QueryRange            | `$client->getQueryRange('up', new \DateTimeImmutable('today'), new \DateTimeImmutable('now'), '12h');` | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#range-queries)                    |
+| Series                | `$client->getSeries(['up'], new \DateTimeImmutable('-1 minute'), new \DateTimeImmutable('now');`      | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#finding-series-by-label-matchers) |
+| Label Values          | `$client->getLabelValues('job');`                                                                      | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#querying-label-values)            |
+| Targets (active only) | `$client->getTargets();`                                                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#targets)                          |
+| Alert Managers        | `$client->getAlertManagers();`                                                                         | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#alertmanagers)                    |
+| Create snapshot       | `$client->createSnapshot();`                                                                           | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#snapshot)                         |
+| Delete series         | `$client->deleteSeries(['up'], new DateTimeImmutable('today'), new DateTimeImmutable('now');`         | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#delete-series)                    |
+| Clean tombstones      | `$client->cleanTombstones();`                                                                          | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#clean-tombstones)                 |

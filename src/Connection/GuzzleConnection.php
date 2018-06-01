@@ -49,7 +49,23 @@ class GuzzleConnection extends AbstractConnection
     /**
      * @param mixed[] $query
      */
-    public function execute(string $endPoint, array $query = []) : string
+    public function executeGet(string $endPoint, array $query = []) : string
+    {
+        return $this->executeRequest('GET', $endPoint, $query);
+    }
+
+    /**
+     * @param mixed[] $query
+     */
+    public function executePost(string $endPoint, array $query = []) : string
+    {
+        return $this->executeRequest('POST', $endPoint, $query);
+    }
+
+    /**
+     * @param mixed[] $query
+     */
+    private function executeRequest(string $method, string $endPoint, array $query = []) : string
     {
         if ($this->client === null) {
             $this->connect();
@@ -60,21 +76,22 @@ class GuzzleConnection extends AbstractConnection
         $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '%5B%5D=', $queryParameters);
 
         $response = $this->client->request(
-            'GET',
+            $method,
             $endPoint,
             [
                 'query' => $queryString,
             ]
         );
 
-        if ($response->getStatusCode() !== 200) {
+        if ($response->getStatusCode() !== 200 && $response->getStatusCode() !== 204) {
             $parts = parse_url($this->getBaseUri());
             $parts['path'] = $parts['path'] . $endPoint;
             $parts['query'] = http_build_query($query);
             $uri = Uri::fromParts($parts);
             throw new ConnectionException(
                 sprintf(
-                    'Request GET `%s` returned with code %d and message `%s`',
+                    'Request %s `%s` returned with code %d and message `%s`',
+                    $method,
                     (string) $uri,
                     $response->getStatusCode(),
                     $response->getBody()->getContents()

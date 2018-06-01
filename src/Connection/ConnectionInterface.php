@@ -19,5 +19,10 @@ interface ConnectionInterface
     /**
      * @param mixed[] $query
      */
-    public function execute(string $endPoint, array $query = []) : string;
+    public function executeGet(string $endPoint, array $query = []) : string;
+
+    /**
+     * @param mixed[] $query
+     */
+    public function executePost(string $endPoint, array $query = []) : string;
 }
