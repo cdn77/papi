@@ -1,0 +1,28 @@
+{
+  "status": "success",
+  "data": {
+    "alertmanager.notification-queue-capacity": "10000",
+    "alertmanager.timeout": "10s",
+    "config.file": "prometheus.yml",
+    "log.level": "info",
+    "query.lookback-delta": "5m",
+    "query.max-concurrency": "20",
+    "query.timeout": "2m",
+    "storage.tsdb.max-block-duration": "36h",
+    "storage.tsdb.min-block-duration": "2h",
+    "storage.tsdb.no-lockfile": "false",
+    "storage.tsdb.path": "data/",
+    "storage.tsdb.retention": "15d",
+    "web.console.libraries": "console_libraries",
+    "web.console.templates": "consoles",
+    "web.enable-admin-api": "false",
+    "web.enable-lifecycle": "false",
+    "web.external-url": "",
+    "web.listen-address": "0.0.0.0:9090",
+    "web.max-connections": "512",
+    "web.local-assets": "/usr/share/prometheus/web/",
+    "web.read-timeout": "5m",
+    "web.route-prefix": "/",
+    "web.user-assets": ""
+  }
+}

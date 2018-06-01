@@ -4,8 +4,10 @@ declare (strict_types=1);
 
 namespace PApi;
 
+use PApi\Response\FlagsData;
 use PApi\Response\Meta\ArrayValuesResponseMeta;
 use PApi\Response\Meta\DataResponseMeta;
+use PApi\Response\Meta\FlagsDataResponseMeta;
 use PApi\Response\Metric;
 use PApi\Response\Response;
 use PApi\Response\ResponseData;
@@ -18,12 +20,15 @@ class ResponseTranslationTest extends TestCase
     public function testAlertManagersResponse() : void
     {
         $response = DataResponseMeta::fromJson(file_get_contents(__DIR__ . '/../Fixtures/alertmanagersResponse.json'));
-        $alertManagers = $response->getData()->getActiveAlertmanagers();
+        $activeAlertmanagers = $response->getData()->getActiveAlertmanagers();
+        $droppedAlertmanagers = $response->getData()->getDroppedAlertmanagers();
 
         $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
         $this->assertInstanceOf(ResponseData::class, $response->getData());
-        $this->assertCount(1, $alertManagers);
-        $this->assertSame('http://127.0.0.1:9090/api/v1/alerts', $alertManagers[0]->getUrl());
+        $this->assertCount(1, $activeAlertmanagers);
+        $this->assertCount(1, $droppedAlertmanagers);
+        $this->assertSame('http://127.0.0.1:9090/api/v1/alerts', $activeAlertmanagers[0]->getUrl());
+        $this->assertSame('http://127.0.0.1:9093/api/v1/alerts', $droppedAlertmanagers[0]->getUrl());
     }
 
     public function testLabelValuesResponse() : void
@@ -72,14 +77,17 @@ class ResponseTranslationTest extends TestCase
     public function testTargetsResponse() : void
     {
         $response = DataResponseMeta::fromJson(file_get_contents(__DIR__ . '/../Fixtures/targetsResponse.json'));
-        $target = $response->getData()->getActiveTargets()[0];
+        $activeTarget = $response->getData()->getActiveTargets()[0];
+        $droppedTarget = $response->getData()->getDroppedTargets()[0];
 
         $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
-        $this->assertNotEmpty($target->getDiscoveredLabels());
-        $this->assertNotEmpty($target->getLabels());
+        $this->assertNotEmpty($activeTarget->getDiscoveredLabels());
+        $this->assertNotEmpty($activeTarget->getLabels());
         $this->assertInstanceOf(ResponseData::class, $response->getData());
-        $this->assertInstanceOf(Target::class, $target);
-        $this->assertInstanceOf(\DateTimeImmutable::class, $target->getLastScrape());
+        $this->assertInstanceOf(Target::class, $activeTarget);
+        $this->assertInstanceOf(Target::class, $droppedTarget);
+        $this->assertNotEmpty($droppedTarget->getDiscoveredLabels());
+        $this->assertInstanceOf(\DateTimeImmutable::class, $activeTarget->getLastScrape());
     }
 
     public function testVectorResponse() : void
@@ -104,5 +112,23 @@ class ResponseTranslationTest extends TestCase
         $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
         $this->assertInstanceOf(ResponseData::class, $response->getData());
         $this->assertEquals('20171210T211224Z-2be650b6d019eb54', $response->getData()->getName());
+    }
+
+    public function testConfigResponse() : void
+    {
+        $response = DataResponseMeta::fromJson(file_get_contents(__DIR__ . '/../Fixtures/configResponse.json'));
+        $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
+        $this->assertInstanceOf(ResponseData::class, $response->getData());
+        $yamlArray = $response->getData()->getParsedYaml();
+        $this->assertNotEmpty($yamlArray);
+        $this->assertEquals('30s', $yamlArray['global']['scrape_interval']);
+    }
+
+    public function testFlagsResponse() : void
+    {
+        $response = FlagsDataResponseMeta::fromJson(file_get_contents(__DIR__ . '/../Fixtures/flagsResponse.json'));
+        $this->assertSame(Response::STATUS_SUCCESS, $response->getStatus());
+        $this->assertInstanceOf(FlagsData::class, $response->getData());
+        $this->assertEquals('0.0.0.0:9090', $response->getData()->getWebListenAddress());
     }
 }

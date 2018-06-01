@@ -8,8 +8,10 @@ use PApi\Connection\ConnectionInterface;
 use PApi\Connection\CurlConnection;
 use PApi\Response\ArrayValuesResponse;
 use PApi\Response\DataResponse;
+use PApi\Response\FlagsDataResponse;
 use PApi\Response\Meta\ArrayValuesResponseMeta;
 use PApi\Response\Meta\DataResponseMeta;
+use PApi\Response\Meta\FlagsDataResponseMeta;
 
 class Client
 {
@@ -118,11 +120,14 @@ class Client
     }
 
     /**
-     * Make sure to enable admin APIs via `--web.enable-admin-api`
+     * Make sure to enable admin APIs via `--web.enable-admin-api`.
+     * Skip head option is only relevant for Prometheus 2.2+
      */
-    public function createSnapshot() : DataResponse
+    public function createSnapshot(bool $skipHead = false) : DataResponse
     {
-        return DataResponseMeta::fromJson($this->connection->executePost('admin/tsdb/snapshot'));
+        return DataResponseMeta::fromJson($this->connection->executePost('admin/tsdb/snapshot', [
+            'skip_head' => $skipHead,
+        ]));
     }
 
     /**
@@ -146,5 +151,15 @@ class Client
     {
         $this->connection->executePost('admin/tsdb/clean_tombstones');
         return true;
+    }
+
+    public function getConfig() : DataResponse
+    {
+        return DataResponseMeta::fromJson($this->connection->executeGet('status/config'));
+    }
+
+    public function getFlags() : FlagsDataResponse
+    {
+        return FlagsDataResponseMeta::fromJson($this->connection->executeGet('status/flags'));
     }
 }

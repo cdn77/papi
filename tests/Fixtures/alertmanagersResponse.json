@@ -5,6 +5,11 @@
       {
         "url": "http://127.0.0.1:9090/api/v1/alerts"
       }
+    ],
+    "droppedAlertmanagers": [
+      {
+        "url": "http://127.0.0.1:9093/api/v1/alerts"
+      }
     ]
   }
 }

@@ -3,7 +3,7 @@
 
 Targets to provide simple means for obtaining data from Prometheus API.
 
-Stable for [Prometheus 1.x and <= v2.1 api spec](https://prometheus.io/docs/prometheus/2.1/querying/api/)
+Stable for [Prometheus 1.x and <= v2.2 api spec](https://prometheus.io/docs/prometheus/2.2/querying/api/)
 NOTICE: some endpoints are only available in newer versions of Prometheus. For detailed list see [table of available calls](#available-calls) below.
 
 ## Instalation
@@ -47,12 +47,14 @@ PApi currently has methods for all available endpoints provided by Prometheus.
 
 | Call                  | Code                                                                                                   | Prometheus compatibility | Official doc                                                                                     |
 | --------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------ |
-| Query                 | `$client->getQuery('up', new \DateTimeImmutable('now');`                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#instant-queries)                  |
-| QueryRange            | `$client->getQueryRange('up', new \DateTimeImmutable('today'), new \DateTimeImmutable('now'), '12h');` | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#range-queries)                    |
-| Series                | `$client->getSeries(['up'], new \DateTimeImmutable('-1 minute'), new \DateTimeImmutable('now');`      | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#finding-series-by-label-matchers) |
-| Label Values          | `$client->getLabelValues('job');`                                                                      | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#querying-label-values)            |
-| Targets (active only) | `$client->getTargets();`                                                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#targets)                          |
-| Alert Managers        | `$client->getAlertManagers();`                                                                         | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#alertmanagers)                    |
-| Create snapshot       | `$client->createSnapshot();`                                                                           | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#snapshot)                         |
-| Delete series         | `$client->deleteSeries(['up'], new DateTimeImmutable('today'), new DateTimeImmutable('now');`         | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#delete-series)                    |
-| Clean tombstones      | `$client->cleanTombstones();`                                                                          | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.1/querying/api/#clean-tombstones)                 |
+| Query                 | `$client->getQuery('up', new \DateTimeImmutable('now');`                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#instant-queries)                   |
+| QueryRange            | `$client->getQueryRange('up', new \DateTimeImmutable('today'), new \DateTimeImmutable('now'), '12h');` | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#range-queries)                     |
+| Series                | `$client->getSeries(['up'], new \DateTimeImmutable('-1 minute'), new \DateTimeImmutable('now');`       | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#finding-series-by-label-matchers)  |
+| Label Values          | `$client->getLabelValues('job');`                                                                      | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#querying-label-values)             |
+| Targets (active only) | `$client->getTargets();`                                                                               | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#targets)                           |
+| Alert Managers        | `$client->getAlertManagers();`                                                                         | >=1.0                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#alertmanagers)                     |
+| Create snapshot       | `$client->createSnapshot();`                                                                           | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#snapshot)                          |
+| Delete series         | `$client->deleteSeries(['up'], new DateTimeImmutable('today'), new DateTimeImmutable('now');`          | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#delete-series)                     |
+| Clean tombstones      | `$client->cleanTombstones();`                                                                          | >=2.1                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#clean-tombstones)                  |
+| Get Config            | `$client->getConfig();`                                                                                | >=2.2                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#config)                            |
+| Get Flags             | `$client->getFlags();`                                                                                 | >=2.2                    | [doc](https://prometheus.io/docs/prometheus/2.2/querying/api/#flags)                             |
