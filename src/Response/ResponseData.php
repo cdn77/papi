@@ -97,6 +97,9 @@ class ResponseData
      */
     public function getParsedYaml(int $flags = 0) : array
     {
-        return Yaml::parse($this->getYaml(), $flags);
+        return Yaml::parse(
+            (string) $this->getYaml(),
+            $flags
+        );
     }
 }
